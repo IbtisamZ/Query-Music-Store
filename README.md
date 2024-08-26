@@ -1,4 +1,4 @@
-# Analyze a Music Store using SQL
+# Analyze a Music Store using SQL (Postgres)
 ### My project for Udacity Business Analytics Program
 
 
