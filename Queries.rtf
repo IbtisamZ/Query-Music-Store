@@ -1,0 +1,66 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2636
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;}
+{\colortbl;\red255\green255\blue255;\red26\green26\blue26;\red255\green255\blue255;\red26\green26\blue26;
+}
+{\*\expandedcolortbl;;\cssrgb\c13333\c13333\c13333;\cssrgb\c100000\c100000\c100000;\cssrgb\c13333\c13333\c13333;
+}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid201\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid3}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls1\ilvl0
+\f0\fs26 \cf2 \cb3 \
+\ls1\ilvl0\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 /* Q1: Top 10 best-seller songs: */\
+\pard\pardeftab720\partightenfactor0
+\cf2 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \cb1 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 SELECT t.name as "Song Name", art.name as "Artist Name", count(i.customerid) as "Number of Purchases"\
+FROM track t\
+JOIN invoiceLine invl ON invl.trackid = t.trackid\
+JOIN invoice i ON i.invoiceid = invl.invoiceid\
+JOIN customer c ON i.customerid = c.customerid\
+JOIN album alb ON alb.albumid = t.albumid\
+JOIN artist art ON art.artistid = alb.artistid\
+GROUP BY 1, 2\
+ORDER BY "Number of Purchases" DESC\
+LIMIT 10\
+\
+\cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls2\ilvl0\cf2 \cb3 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 /* \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Q2: Top 10 countries with the most purchases: */\
+\ls2\ilvl0\cb1 \
+SELECT c.country as "Country Name",\
+count(i.customerid) as "Number of Purchases"\
+FROM customer c\
+JOIN invoice i ON i.customerid = c.customerid\
+GROUP BY 1\
+ORDER BY "Number of Purchases" DESC\
+LIMIT 10\
+\
+/* Q3: Top 10 most popular genres: */\
+\
+SELECT g.name as "Genre Name", \
+count(i.invoiceid) as "Number of Purchases"\
+FROM track t\
+JOIN invoiceLine invl ON invl.trackid = t.trackid\
+JOIN invoice i ON i.invoiceid = invl.invoiceid\
+JOIN genre g ON g.genreid = t.genreid\
+GROUP BY 1\
+ORDER BY "Number of Purchases" DESC\
+LIMIT 10\
+\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls3\ilvl0\cf4 \outl0\strokewidth0 /* Q3: Which sales agent made the most number of sales? */\
+\
+SELECT e.employeeid as "Employee Id", e.firstname as "First Name", e.lastname as "Last Name", count(i.invoiceid) as "Number of Sales"\
+FROM employee e\
+JOIN customer c ON e.employeeid = c.supportrepid\
+JOIN invoice i ON i.customerid = c.customerid\
+GROUP BY 1,2, 3\
+ORDER BY "Number of Sales" DESC}
